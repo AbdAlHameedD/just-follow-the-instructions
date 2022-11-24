@@ -1,0 +1,111 @@
+div.horizontal-arm {
+  width: 245px;
+  height: 60px;
+  right: 0;
+  border-top-left-radius: 50px;
+}
+
+div.vertical-arm {
+  width: 60px;
+  height: 55px;
+  margin-top: 60px;
+  right: 185px;
+}
+
+div.top-horizontal-sub-fingure {
+  width: 20px;
+  height: 5px;
+}
+
+div.vertical-sub-fingure {
+  width: 5px;
+  height: 45px;
+}
+
+div.bottom-horizontal-sub-fingure {
+  width: 10px;
+  height: 5px;
+}
+
+div.sub-sub-fingure {
+  width: 7px;
+  height: 2px;
+}
+
+div.right-top-horizontal-sub-fingure {
+  left: 60px;
+  top: 50px;
+}
+
+div.left-top-horizontal-sub-fingure {
+  right: 0;
+  top: 50px;
+}
+
+div.right-horizontal-sub-fingure {
+  left: 75px;
+  top: 55px;
+}
+
+div.left-horizontal-sub-fingure {
+  right: 15px;
+  top: 55px;
+}
+
+div.right-bottom-horizontal-sub-fingure {
+  left: 65px;
+  top: 95px;
+}
+
+div.left-bottom-horizontal-sub-fingure {
+  right: 5px;
+  top: 95px;
+}
+
+#right-top-sub-right-fingure {
+  top: 93px;
+  left: 65px;
+  transition: 3s !important;
+}
+
+#right-bottom-sub-right-fingure {
+  top: 100px;
+  left: 65px;
+  transition: 3s !important;
+}
+
+#left-top-sub-left-fingure {
+  right: 5px;
+  top: 93px;
+  transition: 3s !important;
+}
+
+#left-bottom-sub-left-fingure {
+  right: 5px;
+  top: 100px;
+  transition: 3s !important;
+}
+
+.openRightTopFinger {
+  transform: rotate(-90deg);
+  top: 91px !important;
+  left: 62.5px !important;
+}
+
+.openRightBottomFinger {
+  transform: rotate(90deg);
+  top: 102px !important;
+  left: 62.5px !important;
+}
+
+.openLeftTopFinger {
+  transform: rotate(90deg);
+  top: 91px !important;
+  right: 2.6px !important;
+}
+
+.openLeftBottomFinger {
+  transform: rotate(-90deg);
+  top: 102px !important;
+  right: 2.6px !important;
+}

@@ -1,0 +1,24 @@
+<div class="row w-100 h-100 p-0 m-0">
+
+    <div class="p-0">
+        <div class="d-flex justify-content-around" style="margin-top: 20px;">
+            <div class="add-cube enable-add slot-func" *ngIf="canEditCubes === true" (click)="addCube()"
+                [id]="slotNumber+'-add'">
+            </div>
+
+            <div class="remove-cube disable-remove slot-func" *ngIf="canEditCubes === true" (click)="removeCube()"
+                [id]="slotNumber+'-remove'">
+            </div>
+        </div>
+    </div>
+
+    <div class="p-0" style="height: calc(100% - 45px)">
+        <div class="d-flex flex-column-reverse align-items-end w-100" [id]="slotNumber"
+            style="height: 350px; margin-top: 95px;">
+
+            <!-- Cubes Here -->
+
+        </div>
+    </div>
+
+</div>

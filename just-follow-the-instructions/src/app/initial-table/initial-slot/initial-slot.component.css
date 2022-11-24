@@ -1,0 +1,33 @@
+div.enable-add {
+  background-image: url("../../../assets/icons/enabled-plus-icon.svg");
+}
+
+div.enable-remove {
+  background-image: url("../../../assets/icons/enabled-minus-icon.svg");
+}
+
+div.disable-add {
+  background-image: url("../../../assets/icons/disabled-plus-icon.svg");
+}
+
+div.disable-remove {
+  background-image: url("../../../assets/icons/disabled-minus-icon.svg");
+}
+
+div.slot-func {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+div.cube {
+  width: 70px;
+  height: 70px;
+  box-sizing: border-box;
+  background-color: #000;
+  color: #fff;
+  border-radius: 10px;
+  border-width: 5px;
+  border-style: solid;
+}

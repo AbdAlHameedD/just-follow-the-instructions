@@ -1,0 +1,16 @@
+@font-face {
+  font-family: "digital";
+  src: url("../assets/fonts/DIGITALDREAM.ttf");
+}
+
+body {
+  background-color: #eee;
+  margin: 0;
+}
+
+.title {
+  padding-top: 40px !important;
+  margin-bottom: 50px !important;
+  font-family: "digital";
+  letter-spacing: 10px;
+}
