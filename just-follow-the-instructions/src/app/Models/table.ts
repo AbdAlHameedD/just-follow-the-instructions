@@ -129,4 +129,12 @@ export class Table {
 
     return this.borderColors[randomIndex];
   }
+
+  public equals(table: Table): boolean {
+    for (let i = 0; i < 18; i++) {
+      if (!this.slots[i].equals(table.slots[i])) return false;
+    }
+
+    return true;
+  }
 }

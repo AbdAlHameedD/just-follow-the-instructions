@@ -110,4 +110,24 @@ export class Cube {
     this.isClear = true;
     cube.isClear = false;
   }
+
+  public equals(cube: Cube): boolean {
+    return (
+      this.equalLabels(cube.getLabel()) &&
+      this.equalSlotNumber(cube.getSlotNumber()) &&
+      this.equalCubeBelow(cube)
+    );
+  }
+
+  private equalLabels(label: string): boolean {
+    return label == this.getLabel();
+  }
+
+  private equalSlotNumber(slotNumber: number): boolean {
+    return this.getSlotNumber() == slotNumber;
+  }
+
+  private equalCubeBelow(cube: Cube) {
+    return this.getOnCube()?.getLabel() == cube.getOnCube()?.getLabel();
+  }
 }

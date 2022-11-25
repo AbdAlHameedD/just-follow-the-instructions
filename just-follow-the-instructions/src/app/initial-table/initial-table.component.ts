@@ -17,8 +17,6 @@ export class InitialTableComponent implements OnInit {
 
   public submitInitialState(): void {
     Config.initialState = this.table;
-    console.log(this.table.getSlots());
-
     this.router.navigate(['goalState']);
   }
 }
