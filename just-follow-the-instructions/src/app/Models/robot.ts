@@ -14,8 +14,12 @@ export class Robot {
     this.f();
   }
 
-  async f() {
-    await this.holdCube(this.table.getSlots()[2].getPeakCube()!);
+  public async f() {
+    console.log(this.table.equals(Config.goalState!));
+    console.log(Config.initialState?.getSlots());
+    console.log(Config.goalState?.getSlots());
+
+    /*await this.holdCube(this.table.getSlots()[2].getPeakCube()!);
     await this.dropOff(this.table.getSlots()[17]);
 
     await this.holdCube(this.table.getSlots()[3].getPeakCube()!);
@@ -25,7 +29,7 @@ export class Robot {
     await this.dropOff(this.table.getSlots()[17]);
 
     await this.holdCube(this.table.getSlots()[16].getPeakCube()!);
-    await this.dropOff(this.table.getSlots()[17]);
+    await this.dropOff(this.table.getSlots()[17]);*/
   }
 
   /*

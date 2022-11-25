@@ -62,7 +62,6 @@ export class Slot {
     this.isEmpty() ? cube.putDown(this) : cube.stack(this.getPeakCube()!);
 
     this.cubes.push(cube);
-    console.log(this);
   }
 
   /*
@@ -79,7 +78,6 @@ export class Slot {
         );
 
     this.cubes.pop();
-    console.log(this);
   }
 
   /*
@@ -112,5 +110,33 @@ export class Slot {
    */
   public getCube(label: string): Cube | undefined {
     return this.cubes.find((cube: Cube) => cube.getLabel() == label);
+  }
+
+  public equals(slot: Slot): boolean {
+    if (this.equalSlotLengthAndSlotNumber(slot)) {
+      return this.equalCubesInTheSlot(slot.getCubes());
+    }
+
+    return false;
+  }
+
+  private equalSlotLengthAndSlotNumber(slot: Slot): boolean {
+    return (
+      slot.getNumberOfCubes() == this.getNumberOfCubes() &&
+      this.equalSlotNumber(slot.getSlotNumber())
+    );
+  }
+
+  private equalSlotNumber(slotNumber: number): boolean {
+    return this.getSlotNumber() == slotNumber;
+  }
+
+  private equalCubesInTheSlot(cubes: Cube[]): boolean {
+    let numberOfCubesInSlot = cubes.length;
+    for (let i: number = 0; i < numberOfCubesInSlot; i++) {
+      if (!this.cubes[i].equals(cubes[i])) return false;
+    }
+
+    return true;
   }
 }

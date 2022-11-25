@@ -28,7 +28,16 @@ export class GoalTableComponent implements OnInit {
   ngOnInit(): void {}
 
   public submitGoalState(): void {
-    Config.goalState = this.table;
-    this.router.navigate(['justFollowTheInstructions']);
+    if (this.goalTableCubesNumberEqualsInitialTableCubesNumber()) {
+      Config.goalState = this.table;
+      this.router.navigate(['justFollowTheInstructions']);
+    }
+  }
+
+  public goalTableCubesNumberEqualsInitialTableCubesNumber(): boolean {
+    return (
+      this.table.getTotalNumberOfCubes() ==
+      Config.initialState?.getTotalNumberOfCubes()
+    );
   }
 }

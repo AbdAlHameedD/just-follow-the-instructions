@@ -36,7 +36,22 @@ export class GoalSlotComponent implements OnInit {
       this.table?.increaseTotalNumberOfCubes();
       this.createCubeContainer(newCube);
       this.updateCubeFunctions();
+
+      this.enableSubmitGoalStateButton();
     }
+  }
+
+  public enableSubmitGoalStateButton(): void {
+    if (this.goalTableCubesNumberEqualsInitialTableCubesNumber()) {
+      document.getElementById('submitGoalState')!.classList.remove('disabled');
+    }
+  }
+
+  public goalTableCubesNumberEqualsInitialTableCubesNumber(): boolean {
+    return (
+      this.table?.getTotalNumberOfCubes() ==
+      Config.initialState?.getTotalNumberOfCubes()
+    );
   }
 
   public removeCube(): void {
@@ -49,6 +64,14 @@ export class GoalSlotComponent implements OnInit {
       this.slot?.popCube();
       this.updateCubeFunctions();
       this.table?.decreaseTotalNumberOfCubes();
+    }
+
+    this.disableSubmitGoalStateButton();
+  }
+
+  public disableSubmitGoalStateButton(): void {
+    if (!this.goalTableCubesNumberEqualsInitialTableCubesNumber()) {
+      document.getElementById('submitGoalState')!.classList.add('disabled');
     }
   }
 
