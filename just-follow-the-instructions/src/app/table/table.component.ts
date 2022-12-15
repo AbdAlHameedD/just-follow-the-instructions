@@ -15,7 +15,7 @@ export class TableComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     Spinner.show();
-    await delay(3000);
+    //await delay(3000);
     Spinner.hide();
   }
 }

@@ -1,3 +1,4 @@
+import { Cube } from './cube';
 import { Slot } from './slot';
 
 export class Table {
@@ -37,14 +38,14 @@ export class Table {
     'y',
     'x',
     'w',
+    'v',
     'u',
-    'r',
     't',
     's',
+    'r',
     'q',
     'p',
     'o',
-    'l',
     'n',
     'm',
     'l',
@@ -136,5 +137,12 @@ export class Table {
     }
 
     return true;
+  }
+
+  public getCube(label: string): Cube | void {
+    for (let slot of this.slots) {
+      const cube: Cube | undefined = slot.getCube(label);
+      if (cube) return cube;
+    }
   }
 }
