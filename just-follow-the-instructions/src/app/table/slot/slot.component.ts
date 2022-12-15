@@ -37,7 +37,7 @@ export class SlotComponent implements OnInit {
     cubeContainer.style.borderWidth = '5px';
     cubeContainer.style.borderStyle = 'solid';
     cubeContainer.style.borderColor = `#${this.table?.getRandomBorderColor()}`;
-    cubeContainer.style.transition = '5s';
+    cubeContainer.style.transition = '3s';
     cubeContainer.style.position = 'relative';
     cubeContainer.style.bottom = '0';
     cubeContainer.style.left = '0';

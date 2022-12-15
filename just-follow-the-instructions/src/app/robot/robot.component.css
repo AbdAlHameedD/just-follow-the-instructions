@@ -65,25 +65,25 @@ div.left-bottom-horizontal-sub-fingure {
 #right-top-sub-right-fingure {
   top: 93px;
   left: 65px;
-  transition: 3s !important;
+  transition: 1.5s !important;
 }
 
 #right-bottom-sub-right-fingure {
   top: 100px;
   left: 65px;
-  transition: 3s !important;
+  transition: 1.5s !important;
 }
 
 #left-top-sub-left-fingure {
   right: 5px;
   top: 93px;
-  transition: 3s !important;
+  transition: 1.5s !important;
 }
 
 #left-bottom-sub-left-fingure {
   right: 5px;
   top: 100px;
-  transition: 3s !important;
+  transition: 1.5s !important;
 }
 
 .openRightTopFinger {

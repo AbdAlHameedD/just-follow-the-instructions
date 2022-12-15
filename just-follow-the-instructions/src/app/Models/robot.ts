@@ -7,36 +7,99 @@ export class Robot {
   // Properties
   public holdingCube: Cube | undefined;
   private SLOT_CONSTANT = 155;
-  private table: Table = Config.initialState!;
+  private initailState: Table = Config.initialState!;
+  private goalState: Table = Config.goalState!;
+  private initialSlots: Slot[] = this.initailState.getSlots();
+  private goalSlots: Slot[] = this.goalState.getSlots();
 
   // Methods
   constructor() {
-    this.f();
+    this.operate();
   }
 
-  public async f() {
-    console.log(this.table.equals(Config.goalState!));
-    console.log(Config.initialState?.getSlots());
-    console.log(Config.goalState?.getSlots());
-
-    /*await this.holdCube(this.table.getSlots()[2].getPeakCube()!);
-    await this.dropOff(this.table.getSlots()[17]);
-
-    await this.holdCube(this.table.getSlots()[3].getPeakCube()!);
-    await this.dropOff(this.table.getSlots()[16]);
-
-    await this.holdCube(this.table.getSlots()[3].getPeakCube()!);
-    await this.dropOff(this.table.getSlots()[17]);
-
-    await this.holdCube(this.table.getSlots()[16].getPeakCube()!);
-    await this.dropOff(this.table.getSlots()[17]);*/
+  public async operate() {
+    console.log(this.goalSlots);
+    for (let slotNumber = 0; slotNumber < 18; slotNumber++) {
+      if (!this.oppositeSlotAreEqualOrGoalSlotIsEmpty(slotNumber)) {
+        this.initialSlots[slotNumber].closeSlot();
+        if (this.initialSlotIsEmpty(slotNumber)) {
+          await this.orderCubes(
+            this.initialSlots[slotNumber],
+            this.goalSlots[slotNumber]
+          );
+        } else {
+          await this.emptySlot(slotNumber);
+          await this.orderCubes(
+            this.initialSlots[slotNumber],
+            this.goalSlots[slotNumber]
+          );
+        }
+        this.initialSlots[slotNumber].openSlot();
+      }
+    }
   }
 
-  /*
-   * Animate robot arm in x-axis based on slot number.
-   * and animate cube also if the arm is holding cube
-   * Return Datatype: void
-   */
+  private async emptySlot(slotNumber: number): Promise<void> {
+    const slot: Slot = this.initialSlots[slotNumber];
+    while (!slot.isEmpty() && !this.oppositeSlotAreEqual(slotNumber)) {
+      await this.holdCube(slot.getPeakCube()!);
+      await this.dropOff(this.findTemporarySlot()!);
+    }
+  }
+
+  private async orderCubes(initialSlot: Slot, goalSlot: Slot): Promise<void> {
+    if (!initialSlot.getBaseCube()?.equals(goalSlot.getBaseCube()!)) {
+      for (let i = 0; i < goalSlot.getNumberOfCubes(); i++) {
+        if (initialSlot.equals(goalSlot)) break;
+        await this.holdCube(
+          this.initailState.getCube(goalSlot.getCubes()![i].getLabel())!
+        );
+        await this.dropOff(initialSlot);
+      }
+    }
+    /*if (!initialSlot.getBaseCube()?.equals(goalSlot.getBaseCube()!)) {
+      await this.holdCube(
+        this.initailState.getCube(goalSlot.getBaseCube()!.getLabel())!
+      );
+      await this.dropOff(initialSlot);
+
+      await this.holdCube(
+        this.initailState.getCube(goalSlot.getCubes()![1].getLabel())!
+      );
+      await this.dropOff(initialSlot);
+
+      await this.holdCube(
+        this.initailState.getCube(goalSlot.getCubes()![2].getLabel())!
+      );
+      await this.dropOff(initialSlot);
+
+      await this.holdCube(
+        this.initailState.getCube(goalSlot.getCubes()![3].getLabel())!
+      );
+      await this.dropOff(initialSlot);
+
+      await this.holdCube(
+        this.initailState.getCube(goalSlot.getCubes()![4].getLabel())!
+      );
+      await this.dropOff(initialSlot);
+    }*/
+  }
+
+  private oppositeSlotAreEqualOrGoalSlotIsEmpty(slotNumber: number): boolean {
+    return (
+      this.oppositeSlotAreEqual(slotNumber) ||
+      this.goalSlots[slotNumber].isEmpty()
+    );
+  }
+
+  private oppositeSlotAreEqual(slotNumber: number): boolean {
+    return this.goalSlots[slotNumber].equals(this.initialSlots[slotNumber]);
+  }
+
+  private initialSlotIsEmpty(slotNumber: number): boolean {
+    return this.initialSlots[slotNumber].isEmpty();
+  }
+
   private async translateToSlot(n: number): Promise<void> {
     document.getElementById('horizontalSubArm')!.style.width = `${
       this.SLOT_CONSTANT + n * 90
@@ -50,12 +113,6 @@ export class Robot {
     }
   }
 
-  /*
-   * Animate robot arm in y-axis based on cube deep
-   * Parameter:
-   *    - cubeDeep: that represent cube at any level (range: (1, 5))
-   * Return Datatype: void
-   */
   private async translateY(cubeDeep: number): Promise<void> {
     document.getElementById('finguresSubArm')!.style.height = `${
       105 + cubeDeep * 70
@@ -63,19 +120,11 @@ export class Robot {
     document.getElementById('fingures')!.style.top = `${cubeDeep * 70 + 50}px`;
   }
 
-  /*
-   * Animate robot to default y-axis high
-   * Return Datatype: void
-   */
   private async defaultY(): Promise<void> {
     document.getElementById('finguresSubArm')!.style.height = `55px`;
     document.getElementById('fingures')!.style.top = `0`;
   }
 
-  /*
-   * Animate the opening robot fingers
-   * Return Datatype: void
-   */
   private async deployFingers(): Promise<void> {
     document
       .getElementById('right-top-sub-right-fingure')!
@@ -94,10 +143,6 @@ export class Robot {
       .classList.add('openLeftBottomFinger');
   }
 
-  /*
-   * Animate the closing robot fingers
-   * Return Datatype: void
-   */
   private async withdrawalFingers(): Promise<void> {
     document
       .getElementById('right-top-sub-right-fingure')!
@@ -116,24 +161,20 @@ export class Robot {
       .classList.remove('openLeftBottomFinger');
   }
 
-  /*
-   * Manage all process for holding cube
-   * Parameter:
-   *    - cube: that represent cube needed to hold
-   * Return Datatype: void
-   */
   public async holdCube(cube: Cube): Promise<void> {
+    if (!cube.isClear) await this.RemoveCubesAboveIt(cube);
+
     const cubePosition: number = cube.getSlot()?.getNumberOfCubes()!;
     const cubeDeep: number = 6 - cubePosition;
 
-    await delay(500);
+    await delay(100);
     // Animate robot arm x-axis
     this.translateToSlot(cube.getSlotNumber());
-    await delay(5000);
+    await delay(3000);
 
     // Animate robot arm y-axis
     this.translateY(cubeDeep);
-    await delay(5000);
+    await delay(3000);
 
     // Animate opening robot fingers
     this.deployFingers();
@@ -143,28 +184,42 @@ export class Robot {
     this.defaultY();
     // Animate cube translation y-axis
     this.translateCubeY(cube.getLabel(), cubeDeep);
-    await delay(5000);
+    await delay(3000);
 
     cube.getSlot()!.popCube(); // remove holding cube from slot
     this.holdingCube = cube;
   }
 
-  /*
-   * Manage all process for droping off cube
-   * Parameter:
-   *    - slot: that represent destination slot
-   * Return Datatype: void
-   */
+  private async RemoveCubesAboveIt(cube: Cube) {
+    let slot: Slot = cube.getSlot()!;
+    slot.closeSlot();
+    while (!cube.isClear) {
+      console.log(slot.getPeakCube());
+
+      await this.holdCube(slot.getPeakCube()!);
+      await this.dropOff(this.findTemporarySlot()!);
+    }
+    slot.openSlot();
+  }
+
+  private findTemporarySlot(): Slot | void {
+    return this.initialSlots.find((slot: Slot): Slot | void => {
+      if (!slot.isFull() && !slot.isClosedSlot()) {
+        return slot;
+      }
+    });
+  }
+
   public async dropOff(slot: Slot): Promise<void> {
     // Animate robot arm x-axis
     this.translateToSlot(slot.getSlotNumber());
     // Animate cube translation x-axis
     this.translateCubeX(slot.getSlotNumber());
-    await delay(5000);
+    await delay(3000);
 
     // Animate droping off cube
     this.dropOffCube(slot);
-    await delay(5000);
+    await delay(3000);
 
     // Animate closing robot fingers
     this.withdrawalFingers();
@@ -172,19 +227,12 @@ export class Robot {
 
     // Animate robot arm to default high
     this.defaultY();
-    await delay(5000);
+    await delay(3000);
 
     slot.appendCube(this.holdingCube!); // add new cube to slot
     this.holdingCube = undefined;
   }
 
-  /*
-   * Animate cube translation in y-axis
-   * Parameters:
-   *    - cubeLabel: that represent label of the cube
-   *    - cubePosition: that represent cube position (range(1, 5))
-   * Return Datatype: void
-   */
   private translateCubeY(cubeLabel: string, cubePosition: number): void {
     const cubeElement: HTMLElement = <HTMLElement>(
       document.getElementById(cubeLabel)
@@ -193,12 +241,6 @@ export class Robot {
     cubeElement.style.bottom = `${amountOfYTranslate}px`;
   }
 
-  /*
-   * Animate droping off cube
-   * Parameter:
-   *    - slot: that represent destination slot
-   * Return Datatype: void
-   */
   private async dropOffCube(slot: Slot): Promise<void> {
     const slotElement: HTMLElement = <HTMLElement>(
       document.getElementById(`${slot.getSlotNumber()}`)
@@ -217,16 +259,10 @@ export class Robot {
     cubeElement.style.bottom = `${400 - 70 * slot.getNumberOfCubes()}px`;
     await delay(100);
     this.translateY(6 - (slot.getNumberOfCubes() + 1));
-    cubeElement.style.transition = '5s';
+    cubeElement.style.transition = '3s';
     cubeElement.style.bottom = `0`;
   }
 
-  /*
-   * Animate cube translation in x-axis
-   * Parameter:
-   *    - slotNumber: that represent slot number destination
-   * Return Datatype: void
-   */
   private translateCubeX(slotNumber: number): void {
     const cubeLabel: string = this.holdingCube!.getLabel();
     let differ: number = 0;
@@ -243,6 +279,14 @@ export class Robot {
       cubeElement.style.left = `-${90 * differ}px`;
     }
   }
+}
+
+enum CubeLevel {
+  Peak,
+  Fourth,
+  Third,
+  Second,
+  Base,
 }
 
 function delay(ms: number) {

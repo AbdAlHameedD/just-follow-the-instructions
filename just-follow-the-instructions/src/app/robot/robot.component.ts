@@ -16,7 +16,7 @@ export class RobotComponent implements OnInit {
   constructor() {}
 
   async ngOnInit(): Promise<void> {
-    await delay(3000);
+    //await delay(3000);
     this.robot = new Robot();
   }
 }

@@ -5,7 +5,7 @@
 div.sub-arm {
   box-shadow: 0 4px 7px 0 #00000080, 0 4px 25px 0 #1e1e1e73 inset;
   background-color: #016;
-  transition: 5s;
+  transition: 3s;
 }
 
 .show {
