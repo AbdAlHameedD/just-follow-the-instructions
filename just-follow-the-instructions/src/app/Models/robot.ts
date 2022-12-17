@@ -4,7 +4,6 @@ import { Cube } from './cube';
 import { Table } from './table';
 
 export class Robot {
-  // Properties
   public holdingCube: Cube | undefined;
   private SLOT_CONSTANT = 155;
   private initailState: Table = Config.initialState!;
@@ -12,7 +11,6 @@ export class Robot {
   private initialSlots: Slot[] = this.initailState.getSlots();
   private goalSlots: Slot[] = this.goalState.getSlots();
 
-  // Methods
   constructor() {
     this.operate();
   }
@@ -57,32 +55,6 @@ export class Robot {
         await this.dropOff(initialSlot);
       }
     }
-    /*if (!initialSlot.getBaseCube()?.equals(goalSlot.getBaseCube()!)) {
-      await this.holdCube(
-        this.initailState.getCube(goalSlot.getBaseCube()!.getLabel())!
-      );
-      await this.dropOff(initialSlot);
-
-      await this.holdCube(
-        this.initailState.getCube(goalSlot.getCubes()![1].getLabel())!
-      );
-      await this.dropOff(initialSlot);
-
-      await this.holdCube(
-        this.initailState.getCube(goalSlot.getCubes()![2].getLabel())!
-      );
-      await this.dropOff(initialSlot);
-
-      await this.holdCube(
-        this.initailState.getCube(goalSlot.getCubes()![3].getLabel())!
-      );
-      await this.dropOff(initialSlot);
-
-      await this.holdCube(
-        this.initailState.getCube(goalSlot.getCubes()![4].getLabel())!
-      );
-      await this.dropOff(initialSlot);
-    }*/
   }
 
   private oppositeSlotAreEqualOrGoalSlotIsEmpty(slotNumber: number): boolean {
@@ -279,14 +251,6 @@ export class Robot {
       cubeElement.style.left = `-${90 * differ}px`;
     }
   }
-}
-
-enum CubeLevel {
-  Peak,
-  Fourth,
-  Third,
-  Second,
-  Base,
 }
 
 function delay(ms: number) {

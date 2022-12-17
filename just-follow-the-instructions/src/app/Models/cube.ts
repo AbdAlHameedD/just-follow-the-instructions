@@ -1,7 +1,6 @@
 import { Slot } from './slot';
 
 export class Cube {
-  // Properties
   private label: string = '';
   private slot: Slot | undefined;
   private onCube: Cube | undefined;
@@ -10,7 +9,6 @@ export class Cube {
   public isOnTable: boolean = false;
   public isClear: boolean | undefined = false;
 
-  // Methods
   constructor(
     label: string,
     isOnTable: boolean,
@@ -23,37 +21,18 @@ export class Cube {
     this.onCube = onCube;
   }
 
-  /*
-   * Return cube label
-   * Return Datatype: string
-   */
   public getLabel(): string {
     return this.label;
   }
 
-  /*
-   * Return slot that cube is in it if exists
-   * Otherwise undefined
-   * Return Datatype: Slot or undefined
-   */
   public getSlot(): Slot | undefined {
     return this.slot;
   }
 
-  /*
-   * Return cube bottom of the current cube if exists
-   * Otherwise undefined
-   * Return Datatype: Slot or undefined
-   */
   public getOnCube(): Cube | undefined {
     return this.onCube;
   }
 
-  /*
-   * Return slot number that cube is in it if exists
-   * Otherwise -1
-   * Return Datatype: number (Integer)
-   */
   public getSlotNumber(): number {
     if (this.slot != undefined) {
       return this.slot.getSlotNumber();
@@ -61,22 +40,12 @@ export class Cube {
     return -1;
   }
 
-  /*
-   * Execute the pickUp predicates
-   * Return Datatype: void
-   */
   public pickUp(): void {
     this.isHold = true;
     this.isOnTable = false;
     this.isClear = undefined;
   }
 
-  /*
-   * Execute the putDown predicates
-   * Parameter:
-   *    - slot: that represent cube will putDown in that slot
-   * Return Datatype: void
-   */
   public putDown(slot: Slot): void {
     this.slot = slot;
     this.isOnTable = true;
@@ -84,12 +53,6 @@ export class Cube {
     this.isClear = true;
   }
 
-  /*
-   * Execute the unStack predicates
-   * Parameter:
-   *    - cube: that represent cube bottom of the unstacked cube
-   * Return Datatype: void
-   */
   public unStack(cube: Cube): void {
     this.isHold = true;
     this.onCube = undefined;
@@ -97,12 +60,6 @@ export class Cube {
     cube.isClear = true;
   }
 
-  /*
-   * Execute the stack predicates
-   * Parameter:
-   *    - cube: that represent cube that the current cube will stack above if it
-   * Return Datatype: void
-   */
   public stack(cube: Cube): void {
     this.slot = cube.slot;
     this.isHold = false;
