@@ -2,7 +2,6 @@ import { Cube } from './cube';
 import { Slot } from './slot';
 
 export class Table {
-  // Properties
   private slots: Slot[] = [];
   private totalNumberOfCubes: number = 0;
   private borderColors = [
@@ -88,7 +87,6 @@ export class Table {
     'A',
   ];
 
-  // Methods
   constructor(totalNumberOfCubes: number = 0) {
     this.totalNumberOfCubes = totalNumberOfCubes;
 
