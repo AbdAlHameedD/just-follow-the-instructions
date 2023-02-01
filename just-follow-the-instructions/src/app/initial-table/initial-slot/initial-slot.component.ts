@@ -1,3 +1,4 @@
+import { Config } from './../../Models/config';
 import { Component, Input, OnInit } from '@angular/core';
 import { Cube } from 'src/app/Models/cube';
 import { Slot } from 'src/app/Models/slot';

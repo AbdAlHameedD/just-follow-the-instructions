@@ -1,3 +1,4 @@
+import { Config } from './Models/config';
 import { Component } from '@angular/core';
 
 @Component({

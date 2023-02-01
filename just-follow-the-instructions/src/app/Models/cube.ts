@@ -84,7 +84,7 @@ export class Cube {
     return this.getSlotNumber() == slotNumber;
   }
 
-  private equalCubeBelow(cube: Cube) {
+  private equalCubeBelow(cube: Cube): boolean {
     return this.getOnCube()?.getLabel() == cube.getOnCube()?.getLabel();
   }
 }
